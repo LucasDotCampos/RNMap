@@ -1,11 +1,10 @@
 import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AppLoading from "expo-app-loading";
 import { Roboto_400Regular } from "@expo-google-fonts/roboto";
 import { BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
 import { useFonts } from "expo-font";
 import TelemetrySettings from "./src/screens/TelemetrySettings";
-import HeaderComponent from "./src/components/header";
-import { SafeAreaView } from "react-native";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -16,9 +15,5 @@ export default function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-  return (
-    <SafeAreaView>
-      <TelemetrySettings />
-    </SafeAreaView>
-  );
+  return <TelemetrySettings />;
 }

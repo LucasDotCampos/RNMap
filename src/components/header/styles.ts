@@ -3,7 +3,7 @@ import { fonts } from "../../globalstyles/fonts";
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 120,
+    height: 70,
     backgroundColor: "#4184fe",
     flexDirection: "row",
     alignItems: "center",
