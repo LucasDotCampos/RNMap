@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import AppLoading from "expo-app-loading";
+import { Roboto_400Regular } from "@expo-google-fonts/roboto";
+import { BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
+import { useFonts } from "expo-font";
+import TelemetrySettings from "./src/screens/TelemetrySettings";
+import HeaderComponent from "./src/components/header";
+import { SafeAreaView } from "react-native";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    BebasNeue_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView>
+      <TelemetrySettings />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
