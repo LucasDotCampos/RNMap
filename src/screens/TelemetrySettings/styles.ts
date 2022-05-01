@@ -51,6 +51,21 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
+  production: {
+    width: 120,
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+  },
+  productionInputLine: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   block: {
     backgroundColor: "#F0F0F0",
     width: 380,
@@ -59,9 +74,11 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 30,
     flexDirection: "column",
-    alignItems: "flex-end",
     justifyContent: "center",
     marginBottom: 25,
+  },
+  flexEndBlock: {
+    alignItems: "flex-end",
   },
   lineBlocks: {
     flexDirection: "column",

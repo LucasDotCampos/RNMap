@@ -1,5 +1,4 @@
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import AppLoading from "expo-app-loading";
 import { Roboto_400Regular } from "@expo-google-fonts/roboto";
 import { BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue";
