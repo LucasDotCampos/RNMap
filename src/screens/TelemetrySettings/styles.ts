@@ -99,4 +99,11 @@ export const styles = StyleSheet.create({
     fontSize: 21,
     fontFamily: fonts.BebasNeue400,
   },
+  sendButtonText: {
+    textAlign: "center",
+    fontSize: 21,
+    fontFamily: fonts.BebasNeue400,
+    margin: 10,
+    color: "#fff",
+  },
 });

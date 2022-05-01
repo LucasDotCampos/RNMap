@@ -92,7 +92,7 @@ export default function TelemetrySettings() {
 
         <TouchableOpacity style={styles.button} onPress={InputResponse}>
           <View>
-            <Text style={styles.text}>CONCLUIR</Text>
+            <Text style={styles.sendButtonText}>CONCLUIR</Text>
           </View>
         </TouchableOpacity>
       </View>
