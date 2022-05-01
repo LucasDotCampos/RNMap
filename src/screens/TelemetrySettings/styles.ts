@@ -36,6 +36,11 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#FFFFFF",
   },
+  icon: {
+    position: "absolute",
+    right: 10,
+    top: 4,
+  },
   inputBlock: {
     width: 200,
     height: 40,
@@ -82,5 +87,16 @@ export const styles = StyleSheet.create({
   },
   lineBlocks: {
     flexDirection: "column",
+  },
+
+  button: {
+    backgroundColor: "#4184FE",
+    alignItems: "center",
+    width: "50%",
+    marginTop: 5,
+    marginBottom: 25,
+    alignSelf: "center",
+    fontSize: 21,
+    fontFamily: fonts.BebasNeue400,
   },
 });

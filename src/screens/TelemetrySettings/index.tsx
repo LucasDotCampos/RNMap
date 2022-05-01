@@ -1,11 +1,20 @@
 import React from "react";
-import { Button } from "react-native";
-import { View, Text, TextInput, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import HeaderComponent from "../../components/header";
 import { styles } from "./styles";
 
 export default function TelemetrySettings() {
+  function InputResponse() {
+    return console.log("trabalhos");
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -13,8 +22,11 @@ export default function TelemetrySettings() {
 
         <View style={styles.sector}>
           <Text style={styles.text}>Selecione o Setor:</Text>
-          <TextInput style={styles.largeInput} />
+          <TouchableOpacity style={styles.largeInput} onPress={InputResponse}>
+            <Ionicons name="chevron-down" size={32} style={styles.icon} />
+          </TouchableOpacity>
         </View>
+
         <View style={styles.lineBlocks}>
           <Text style={styles.text}>CONFIGURAÇÃO DO TEMPO DE PARADA</Text>
 
@@ -76,8 +88,13 @@ export default function TelemetrySettings() {
               <TextInput style={styles.production} />
             </View>
           </View>
-          <Button color={"#4184FE"} title="Concluir" onPress={null} />
         </View>
+
+        <TouchableOpacity style={styles.button} onPress={InputResponse}>
+          <View>
+            <Text style={styles.text}>CONCLUIR</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
