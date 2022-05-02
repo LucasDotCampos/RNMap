@@ -23,7 +23,7 @@ export default function TelemetrySettings() {
         <View style={styles.sector}>
           <Text style={styles.text}>Selecione o Setor:</Text>
           <TouchableOpacity style={styles.largeInput} onPress={InputResponse}>
-            <Ionicons name="chevron-down" size={32} style={styles.icon} />
+            <Ionicons name="chevron-down" size={25} style={styles.icon} />
           </TouchableOpacity>
         </View>
 
@@ -56,11 +56,21 @@ export default function TelemetrySettings() {
             <View style={styles.flexEndBlock}>
               <View style={styles.inputLine}>
                 <Text style={styles.inputText}>CATEGORIA:</Text>
-                <TextInput style={styles.inputBlock} />
+                <TouchableOpacity
+                  style={styles.inputBlock}
+                  onPress={InputResponse}
+                >
+                  <Ionicons name="chevron-down" size={25} style={styles.icon} />
+                </TouchableOpacity>
               </View>
               <View style={styles.inputLine}>
                 <Text style={styles.inputText}>PARADA:</Text>
-                <TextInput style={styles.inputBlock} />
+                <TouchableOpacity
+                  style={styles.inputBlock}
+                  onPress={InputResponse}
+                >
+                  <Ionicons name="chevron-down" size={25} style={styles.icon} />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

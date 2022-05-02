@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   icon: {
     position: "absolute",
     right: 10,
-    top: 4,
+    top: 6,
   },
   inputBlock: {
     width: 200,
