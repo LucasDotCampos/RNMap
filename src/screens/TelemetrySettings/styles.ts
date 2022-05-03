@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
   },
   block: {
     backgroundColor: "#F0F0F0",
-    width: 380,
+    width: 360,
     height: 265,
     borderWidth: 1,
     borderRadius: 10,
@@ -81,6 +81,7 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     marginBottom: 25,
+    margin: 10,
   },
   flexEndBlock: {
     alignItems: "flex-end",
