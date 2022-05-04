@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { indexList } from "../../fakeapi";
 
 import HeaderComponent from "../../components/header";
 import { styles } from "./styles";
+import Select from "../../components/select";
 
 export default function TelemetrySettings() {
   function InputResponse() {
@@ -22,9 +24,11 @@ export default function TelemetrySettings() {
 
         <View style={styles.sector}>
           <Text style={styles.text}>Selecione o Setor:</Text>
-          <TouchableOpacity style={styles.largeInput} onPress={InputResponse}>
-            <Ionicons name="chevron-down" size={25} style={styles.icon} />
-          </TouchableOpacity>
+          <Select
+            title={"selecione o setor"}
+            options={indexList}
+            onChangeSelect={(id) => console.log(id)}
+          />
         </View>
 
         <View style={styles.lineBlocks}>

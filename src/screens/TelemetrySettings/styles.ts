@@ -28,14 +28,7 @@ export const styles = StyleSheet.create({
     fontSize: 23,
     fontFamily: fonts.BebasNeue400,
   },
-  largeInput: {
-    width: "90%",
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "#FFFFFF",
-  },
+
   icon: {
     position: "absolute",
     right: 10,
