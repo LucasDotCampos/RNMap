@@ -12,10 +12,8 @@ import HeaderComponent from "../../components/header";
 import { styles } from "./styles";
 import { SelectMultiple } from "../../components/multiselect";
 
-export default  function TelemetrySettings() {
+export default function TelemetrySettings() {
     const [sector, setSector] = useState([]);
-
-   
 
     return (
         <ScrollView>
@@ -26,7 +24,6 @@ export default  function TelemetrySettings() {
                     <Text style={styles.text}>Selecione o Setor:</Text>
 
                     <SelectMultiple
-                        max={3}
                         options={indexList}
                         onChange={(selecionados) => setSector(selecionados)}
                     />

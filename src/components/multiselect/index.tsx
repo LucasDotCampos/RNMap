@@ -15,7 +15,7 @@ import {
 
 import { styles } from "./styles";
 
-export const SelectMultiple = ({ options, onChange, max }) => {
+export const SelectMultiple = ({ options, onChange }) => {
     const [visible, setVisible] = useState(false);
     const [originalOptions, setOriginalOptions] = useState([]);
     const [data, setData] = useState([]);
@@ -38,9 +38,7 @@ export const SelectMultiple = ({ options, onChange, max }) => {
         if (index !== -1) {
             arrSelected.splice(index, 1);
         } else {
-            if (arrSelected.length < max) {
-                arrSelected.push(item);
-            }
+            arrSelected.push(item);
         }
         setSelected(arrSelected);
     }
@@ -53,7 +51,7 @@ export const SelectMultiple = ({ options, onChange, max }) => {
                     {
                         backgroundColor:
                             selected?.findIndex((i) => i.id === item.id) !== -1
-                                ? "#624ae9"
+                                ? "#4184fe"
                                 : "#ffffff",
                     },
                 ]}
@@ -87,6 +85,14 @@ export const SelectMultiple = ({ options, onChange, max }) => {
                                 <Text style={styles.actions}>{"<"}</Text>
                             </TouchableOpacity>
 
+                            <TextInput
+                                placeholderTextColor={"#fff"}
+                                placeholder={"Pesquisar"}
+                                style={styles.input}
+                                value={search}
+                                onChangeText={setSearch}
+                            />
+
                             <TouchableOpacity
                                 onPress={() => {
                                     onChange(selected);
@@ -97,14 +103,6 @@ export const SelectMultiple = ({ options, onChange, max }) => {
                                 <Text style={styles.actions}>Concluir</Text>
                             </TouchableOpacity>
                         </View>
-                        {originalOptions.length > 5 ? (
-                            <TextInput
-                                placeholder={"Pesquisar"}
-                                style={styles.input}
-                                value={search}
-                                onChangeText={setSearch}
-                            />
-                        ) : null}
                     </View>
                     <FlatList
                         data={data}
