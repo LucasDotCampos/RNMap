@@ -25,7 +25,7 @@ export const SelectMultiple = ({ options, onChange, max }) => {
     useEffect(() => {
         setOriginalOptions(options);
         setData(options);
-    }, []);
+    }, [options]);
 
     useEffect(() => {
         let arr = [...originalOptions];
@@ -74,10 +74,10 @@ export const SelectMultiple = ({ options, onChange, max }) => {
             style={styles.container}
             onPress={() => {
                 setVisible(true);
+                setData(options);
             }}
         >
             <View style={styles.largeInput}>
-                <Text onPress={() => setData(options)}></Text>
                 <Text numberOfLines={1}>
                     {selected.map((sector) => `'${sector.name}'  `)}
                 </Text>
