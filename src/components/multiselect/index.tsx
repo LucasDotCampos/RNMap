@@ -23,11 +23,6 @@ export const SelectMultiple = ({ options, onChange, max }) => {
     const [selected, setSelected] = useState([]);
 
     useEffect(() => {
-        setOriginalOptions(options);
-        setData(options);
-    }, [options]);
-
-    useEffect(() => {
         let arr = [...originalOptions];
         setData(
             arr.filter((i) =>
@@ -75,6 +70,7 @@ export const SelectMultiple = ({ options, onChange, max }) => {
             onPress={() => {
                 setVisible(true);
                 setData(options);
+                setOriginalOptions(options);
             }}
         >
             <View style={styles.largeInput}>
