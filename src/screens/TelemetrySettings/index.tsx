@@ -19,7 +19,7 @@ export default function TelemetrySettings() {
         <ScrollView>
             <View style={styles.container}>
                 <HeaderComponent />
-                <View></View>
+
                 <View style={styles.sector}>
                     <Text style={styles.text}>Selecione o Setor:</Text>
 

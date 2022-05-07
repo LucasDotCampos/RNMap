@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import * as ScreenOrientation from "expo-screen-orientation";
 
 import {
     TouchableOpacity,
@@ -11,6 +10,7 @@ import {
     TextInput,
     FlatList,
     Alert,
+    PixelRatio,
 } from "react-native";
 
 import { styles } from "./styles";
@@ -47,12 +47,12 @@ export const SelectMultiple = ({ options, onChange }) => {
         return (
             <TouchableOpacity
                 style={[
-                    styles.input,
+                    styles.text,
                     {
                         backgroundColor:
                             selected?.findIndex((i) => i.id === item.id) !== -1
                                 ? "#4184fe"
-                                : "#ffffff",
+                                : "#fff",
                     },
                 ]}
                 onPress={() => toggleSelection(item)}
@@ -86,7 +86,7 @@ export const SelectMultiple = ({ options, onChange }) => {
                             </TouchableOpacity>
 
                             <TextInput
-                                placeholderTextColor={"#fff"}
+                                placeholderTextColor={"#4184fe"}
                                 placeholder={"Pesquisar"}
                                 style={styles.input}
                                 value={search}
@@ -105,6 +105,7 @@ export const SelectMultiple = ({ options, onChange }) => {
                         </View>
                     </View>
                     <FlatList
+                        style={styles.text}
                         data={data}
                         keyExtractor={(item) => String([item.id])}
                         renderItem={({ item }) => renderItem(item)}
