@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     },
     text: {
         textAlign: "center",
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: fonts.BebasNeue400,
     },
     sector: {
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         fontSize: 15,
     },
     inputText: {
-        fontSize: 23,
+        fontSize: 19,
         fontFamily: fonts.BebasNeue400,
     },
 
@@ -35,12 +35,13 @@ export const styles = StyleSheet.create({
     },
     inputBlock: {
         width: 200,
-        height: 40,
+        height: 32,
         margin: 12,
         borderWidth: 1,
-        padding: 10,
+        paddingHorizontal: 10,
         borderRadius: 10,
         backgroundColor: "#FFFFFF",
+        fontFamily: fonts.BebasNeue400,
     },
 
     inputLine: {
@@ -50,7 +51,7 @@ export const styles = StyleSheet.create({
     },
     production: {
         width: 120,
-        height: 40,
+        height: 32,
         margin: 12,
         borderWidth: 1,
         padding: 10,
@@ -65,8 +66,8 @@ export const styles = StyleSheet.create({
     },
     block: {
         backgroundColor: "#F0F0F0",
-        width: 360,
-        height: 265,
+        width: 350,
+        height: 250,
         borderWidth: 1,
         borderRadius: 10,
         padding: 30,
@@ -79,7 +80,7 @@ export const styles = StyleSheet.create({
         alignItems: "flex-end",
     },
     lineBlocks: {
-        flexDirection: "column",
+        flexDirection: "row",
     },
 
     button: {

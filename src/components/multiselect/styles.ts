@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     icon: {
         position: "absolute",
         right: 10,
-        top: 9,
+        top: 5,
     },
     subtitle: {
         fontFamily: fonts.BebasNeue400,
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
     },
     largeInput: {
         width: "96%",
-        height: 40,
+        height: 32,
         margin: 12,
         borderWidth: 1.3,
         padding: 10,

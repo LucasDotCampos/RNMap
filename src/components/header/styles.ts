@@ -8,11 +8,10 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 16,
     },
     text: {
         textAlign: "center",
-        fontSize: 24,
+        fontSize: 17,
         color: "#fff",
         fontFamily: fonts.BebasNeue400,
     },
@@ -20,5 +19,15 @@ export const styles = StyleSheet.create({
         fontSize: 26,
         color: "#fff",
         fontFamily: fonts.BebasNeue400,
+    },
+    textbox: {
+        flex: 1,
+    },
+    textbox2: {
+        flex: 2,
+    },
+    iconbox: {
+        flex: 1,
+        alignItems: "center",
     },
 });

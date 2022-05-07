@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
-    ScrollView,
     TextInput,
     TouchableOpacity,
+    ScrollView,
+    SafeAreaView,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { indexList } from "../../fakeapi";
@@ -29,84 +30,113 @@ export default function TelemetrySettings() {
                     />
                 </View>
 
-                <View style={styles.lineBlocks}>
-                    <Text style={styles.text}>
-                        CONFIGURAÇÃO DO TEMPO DE PARADA
-                    </Text>
+                <ScrollView horizontal={true}>
+                    <View style={styles.lineBlocks}>
+                        <View>
+                            <Text style={styles.text}>
+                                CONFIGURAÇÃO DO TEMPO DE PARADA
+                            </Text>
+                            <View style={styles.block}>
+                                <View style={styles.flexEndBlock}>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            Branco:
+                                        </Text>
+                                        <TextInput style={styles.inputBlock} />
+                                        <Text style={styles.segText}>SEG</Text>
+                                    </View>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            AMARELO:
+                                        </Text>
+                                        <TextInput style={styles.inputBlock} />
+                                        <Text style={styles.segText}>SEG</Text>
+                                    </View>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            VERMELHO:
+                                        </Text>
+                                        <TextInput style={styles.inputBlock} />
+                                        <Text style={styles.segText}>SEG</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View>
+                            <Text style={styles.text}>
+                                CONFIGURAÇÃO TIPO DE PARADA
+                            </Text>
+                            <View style={styles.block}>
+                                <View style={styles.flexEndBlock}>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            CATEGORIA:
+                                        </Text>
+                                        <TouchableOpacity
+                                            style={styles.inputBlock}
+                                        >
+                                            <Ionicons
+                                                name="chevron-down"
+                                                size={20}
+                                                style={styles.icon}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            PARADA:
+                                        </Text>
+                                        <TouchableOpacity
+                                            style={styles.inputBlock}
+                                        >
+                                            <Ionicons
+                                                name="chevron-down"
+                                                size={20}
+                                                style={styles.icon}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
 
-                    <View style={styles.block}>
-                        <View style={styles.flexEndBlock}>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>Branco:</Text>
-                                <TextInput style={styles.inputBlock} />
-                                <Text style={styles.segText}>SEG</Text>
-                            </View>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>AMARELO:</Text>
-                                <TextInput style={styles.inputBlock} />
-                                <Text style={styles.segText}>SEG</Text>
-                            </View>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>VERMELHO:</Text>
-                                <TextInput style={styles.inputBlock} />
-                                <Text style={styles.segText}>SEG</Text>
+                        <View>
+                            <Text style={styles.text}>
+                                CONFIGURAÇÕES DE PEÇAS REFUGADAS
+                            </Text>
+
+                            <View style={styles.block}>
+                                <View style={styles.flexEndBlock}>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            BRANCO:
+                                        </Text>
+                                        <TextInput style={styles.inputBlock} />
+                                    </View>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            AMARELO:
+                                        </Text>
+                                        <TextInput style={styles.inputBlock} />
+                                    </View>
+                                    <View style={styles.inputLine}>
+                                        <Text style={styles.inputText}>
+                                            VERMELHO:
+                                        </Text>
+                                        <TextInput style={styles.inputBlock} />
+                                    </View>
+                                </View>
+
+                                <View style={styles.productionInputLine}>
+                                    <Text style={styles.inputText}>
+                                        PRODUÇÃO:
+                                    </Text>
+                                    <TextInput style={styles.production} />
+                                </View>
                             </View>
                         </View>
                     </View>
-
-                    <Text style={styles.text}>CONFIGURAÇÃO TIPO DE PARADA</Text>
-
-                    <View style={styles.block}>
-                        <View style={styles.flexEndBlock}>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>CATEGORIA:</Text>
-                                <TouchableOpacity style={styles.inputBlock}>
-                                    <Ionicons
-                                        name="chevron-down"
-                                        size={25}
-                                        style={styles.icon}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>PARADA:</Text>
-                                <TouchableOpacity style={styles.inputBlock}>
-                                    <Ionicons
-                                        name="chevron-down"
-                                        size={25}
-                                        style={styles.icon}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-
-                    <Text style={styles.text}>
-                        CONFIGURAÇÕES DE PEÇAS REFUGADAS
-                    </Text>
-
-                    <View style={styles.block}>
-                        <View style={styles.flexEndBlock}>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>BRANCO:</Text>
-                                <TextInput style={styles.inputBlock} />
-                            </View>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>AMARELO:</Text>
-                                <TextInput style={styles.inputBlock} />
-                            </View>
-                            <View style={styles.inputLine}>
-                                <Text style={styles.inputText}>VERMELHO:</Text>
-                                <TextInput style={styles.inputBlock} />
-                            </View>
-                        </View>
-
-                        <View style={styles.productionInputLine}>
-                            <Text style={styles.inputText}>PRODUÇÃO:</Text>
-                            <TextInput style={styles.production} />
-                        </View>
-                    </View>
-                </View>
+                </ScrollView>
 
                 <TouchableOpacity style={styles.button}>
                     <View>
