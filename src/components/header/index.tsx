@@ -24,7 +24,7 @@ export const HeaderComponent = () => {
     };
     await AsyncStorage.setItem("@mapapp:config", JSON.stringify(newData));
     const showData = await AsyncStorage.getItem("@mapapp:config");
-    ("console.log(JSON.parse(showData));");
+    console.log(JSON.parse(showData));
   }
 
   return (
