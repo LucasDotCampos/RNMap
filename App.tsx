@@ -8,18 +8,18 @@ import TelemetrySettings from "./src/screens/TelemetrySettings";
 import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function App() {
-    const [fontsLoaded] = useFonts({
-        Roboto_400Regular,
-        BebasNeue_400Regular,
-    });
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    BebasNeue_400Regular,
+  });
 
-    if (!fontsLoaded) {
-        return <AppLoading />;
-    }
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <TelemetrySettings />
-        </SafeAreaView>
-    );
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+
+  if (!fontsLoaded) return <AppLoading />;
+
+  return (
+    <SafeAreaView>
+      <TelemetrySettings />
+    </SafeAreaView>
+  );
 }

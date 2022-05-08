@@ -1,4 +1,4 @@
-import { PixelRatio, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { fonts } from "../../globalstyles/fonts";
 import { StatusBar } from "react-native";
 

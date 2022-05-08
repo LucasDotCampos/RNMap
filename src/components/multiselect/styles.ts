@@ -79,10 +79,11 @@ export const styles = StyleSheet.create({
         height: 32,
         margin: 12,
         borderWidth: 1.3,
-        padding: 10,
-        borderRadius: 10,
+        paddingHorizontal: 10,
+        borderRadius: 8,
         backgroundColor: "#FFFFFF",
         fontSize: 20,
+        justifyContent: 'center'
     },
     item: {
         fontFamily: fonts.BebasNeue400,

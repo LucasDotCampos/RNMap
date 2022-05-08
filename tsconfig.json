@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -11,7 +12,10 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": false,
-    "target": "esnext"
+    "target": "esnext",
+    "paths": {
+      "@components/*": ["src/components/*"]
+    }
   },
   "exclude": [
     "node_modules",
