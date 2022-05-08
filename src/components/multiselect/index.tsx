@@ -94,13 +94,16 @@ export const SelectMultiple = ({ options, onChange }) => {
                             />
 
                             <TouchableOpacity
+                                style={styles.sendButton}
                                 onPress={() => {
                                     onChange(selected);
                                     setVisible(false);
                                     setSearch("");
                                 }}
                             >
-                                <Text style={styles.actions}>Concluir</Text>
+                                <Text style={styles.sendButtonText}>
+                                    Concluir
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>

@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-between",
+        borderRadius: 8,
         borderBottomColor: "#fff",
         borderBottomWidth: 1,
         padding: 10,
@@ -63,7 +64,6 @@ export const styles = StyleSheet.create({
         fontFamily: fonts.BebasNeue400,
         fontSize: 20,
         backgroundColor: "#fff",
-        borderRadius: 8,
     },
     largeInput: {
         width: "96%",
@@ -78,5 +78,22 @@ export const styles = StyleSheet.create({
     item: {
         fontFamily: fonts.BebasNeue400,
         fontSize: 20,
+    },
+    sendButton: {
+        backgroundColor: "#fff",
+        alignItems: "center",
+        width: "23%",
+        alignContent: "center",
+        fontSize: 21,
+        fontFamily: fonts.BebasNeue400,
+        justifyContent: "center",
+        borderRadius: 8,
+    },
+    sendButtonText: {
+        textAlign: "center",
+        fontSize: 21,
+        fontFamily: fonts.BebasNeue400,
+        margin: 10,
+        color: "#4184FE",
     },
 });

@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
     button: {
         backgroundColor: "#4184FE",
         alignItems: "center",
-        width: "50%",
+        width: "23%",
         marginTop: 5,
         marginBottom: 25,
         alignSelf: "center",
