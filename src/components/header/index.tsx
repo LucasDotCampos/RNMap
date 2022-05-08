@@ -1,17 +1,31 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, TextInput, Button } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  Button,
+} from "react-native";
 import { styles } from "./styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export const HeaderComponent = () => {
   const [openSettings, setOpenSettings] = useState(false);
-  const [server, setServer] = useState('');
-  const [port, setPort] = useState('');
+  const [server, setServer] = useState("");
+  const [port, setPort] = useState("");
 
-  const handleFinalizar = () => {
-    setOpenSettings(false);
-    console.log(server, port);
-  };
+  async function handleFinalizar() {
+    const newData = {
+      server,
+      port,
+    };
+    await AsyncStorage.setItem("@mapapp:config", JSON.stringify(newData));
+    const showData = await AsyncStorage.getItem("@mapapp:config");
+    ("console.log(JSON.parse(showData));");
+  }
 
   return (
     <View style={styles.container}>
@@ -29,7 +43,7 @@ export const HeaderComponent = () => {
 
       <Modal
         transparent
-        animationType='slide'
+        animationType="slide"
         onRequestClose={() => setOpenSettings(false)}
         visible={openSettings}
       >
@@ -50,13 +64,10 @@ export const HeaderComponent = () => {
                 style={styles.input}
               />
             </View>
-            <Button
-              onPress={handleFinalizar}
-              title='Finalizar'
-            />
+            <Button onPress={handleFinalizar} title="Finalizar" />
           </View>
         </View>
       </Modal>
     </View>
   );
-}
+};
