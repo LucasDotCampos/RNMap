@@ -57,7 +57,7 @@ export const SelectMultiple = ({ options, onChange }) => {
                 ]}
                 onPress={() => toggleSelection(item)}
             >
-                <Text style={styles.title}>{item?.name}</Text>
+                <Text style={styles.text}>{item?.name}</Text>
             </TouchableOpacity>
         );
     }
@@ -81,30 +81,42 @@ export const SelectMultiple = ({ options, onChange }) => {
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={styles.header}>
                         <View style={styles.header2}>
-                            <TouchableOpacity onPress={() => setVisible(false)}>
-                                <Text style={styles.actions}>{"<"}</Text>
-                            </TouchableOpacity>
+                            <View style={styles.boxSize}>
+                                <TouchableOpacity
+                                    onPress={() => setVisible(false)}
+                                >
+                                    <Text style={styles.actions}>{"<"}</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[styles.boxSize, styles.searchView]}>
+                                <TextInput
+                                    placeholderTextColor={"#4184fe"}
+                                    placeholder={"Pesquisar"}
+                                    style={styles.input}
+                                    value={search}
+                                    onChangeText={setSearch}
+                                />
+                                <Ionicons
+                                    name="search"
+                                    size={20}
+                                    style={styles.searchIcon}
+                                />
+                            </View>
 
-                            <TextInput
-                                placeholderTextColor={"#4184fe"}
-                                placeholder={"Pesquisar"}
-                                style={styles.input}
-                                value={search}
-                                onChangeText={setSearch}
-                            />
-
-                            <TouchableOpacity
-                                style={styles.sendButton}
-                                onPress={() => {
-                                    onChange(selected);
-                                    setVisible(false);
-                                    setSearch("");
-                                }}
-                            >
-                                <Text style={styles.sendButtonText}>
-                                    Concluir
-                                </Text>
-                            </TouchableOpacity>
+                            <View style={styles.sendBox}>
+                                <TouchableOpacity
+                                    style={styles.sendButton}
+                                    onPress={() => {
+                                        onChange(selected);
+                                        setVisible(false);
+                                        setSearch("");
+                                    }}
+                                >
+                                    <Text style={styles.sendButtonText}>
+                                        Concluir
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     <FlatList

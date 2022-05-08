@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
     },
+    boxSize: {
+        flex: 1,
+    },
     text: {
         fontSize: 21,
         fontWeight: "500",
@@ -26,16 +29,26 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     actions: {
-        marginLeft: 20,
-        fontSize: 30,
-        color: "black",
+        fontSize: 40,
+        color: "#fff",
         fontWeight: "500",
         fontFamily: fonts.BebasNeue400,
     },
+
     icon: {
         position: "absolute",
         right: 10,
         top: 5,
+    },
+    searchIcon: {
+        position: "absolute",
+        left: 117,
+        top: 13,
+    },
+    searchView: {
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
     subtitle: {
         fontFamily: fonts.BebasNeue400,
@@ -51,11 +64,7 @@ export const styles = StyleSheet.create({
         textAlign: "center",
     },
     input: {
-        marginLeft: 80,
-        width: "40%",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
+        width: "50%",
         borderRadius: 8,
         borderBottomColor: "#fff",
         borderBottomWidth: 1,
@@ -80,9 +89,9 @@ export const styles = StyleSheet.create({
         fontSize: 20,
     },
     sendButton: {
+        width: "50%",
         backgroundColor: "#fff",
         alignItems: "center",
-        width: "23%",
         alignContent: "center",
         fontSize: 21,
         fontFamily: fonts.BebasNeue400,
@@ -95,5 +104,10 @@ export const styles = StyleSheet.create({
         fontFamily: fonts.BebasNeue400,
         margin: 10,
         color: "#4184FE",
+    },
+    sendBox: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "flex-end",
     },
 });
