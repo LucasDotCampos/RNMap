@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -12,20 +12,34 @@ import {
 import { styles } from "./styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+interface IConfig {
+  server: string;
+  port: string;
+}
+
 export const HeaderComponent = () => {
   const [openSettings, setOpenSettings] = useState(false);
   const [server, setServer] = useState("");
   const [port, setPort] = useState("");
+  let config: IConfig;
 
-  async function handleFinalizar() {
-    const newData = {
-      server,
-      port,
-    };
-    await AsyncStorage.setItem("@mapapp:config", JSON.stringify(newData));
-    const showData = await AsyncStorage.getItem("@mapapp:config");
-    console.log(JSON.parse(showData));
+  const handleFinalizar = async () =>  {
+    await AsyncStorage.setItem("@mapapp:config", JSON.stringify({ server, port }));
+    setOpenSettings(false);
   }
+
+  const handleGetConfig = async () => {
+    config = JSON.parse(await AsyncStorage.getItem('@mapapp:config'));
+
+    if(!config) return;
+
+    setServer(config.server);
+    setPort(config.port);
+  };
+
+  useEffect(() => {
+    handleGetConfig();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -55,6 +69,7 @@ export const HeaderComponent = () => {
               <TextInput
                 style={styles.input}
                 onChangeText={(text) => setServer(text)}
+                value={server}
               />
             </View>
             <View style={styles.input_container}>
@@ -62,6 +77,7 @@ export const HeaderComponent = () => {
               <TextInput
                 onChangeText={(text) => setPort(text)}
                 style={styles.input}
+                value={port}
               />
             </View>
             <Button onPress={handleFinalizar} title="Finalizar" />

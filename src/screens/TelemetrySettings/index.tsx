@@ -26,7 +26,6 @@ export default function TelemetrySettings() {
 
           <SelectMultiple
             options={indexList}
-            onChange={(selecionados) => setSector(selecionados)}
           />
         </View>
 
