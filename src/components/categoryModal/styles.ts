@@ -3,7 +3,7 @@ import { fonts } from "../../globalstyles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
     height: 50,
     alignItems: "center",
   },
@@ -71,16 +71,16 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.BebasNeue400,
     fontSize: 20,
   },
-  largeInput: {
-    width: "96%",
+  mainInput: {
+    alignSelf: "flex-end",
+    width: 200,
     height: 32,
     margin: 12,
-    borderWidth: 1.3,
+    borderWidth: 1,
     paddingHorizontal: 10,
-    borderRadius: 8,
+    borderRadius: 10,
     backgroundColor: "#FFFFFF",
-    fontSize: 20,
-    justifyContent: "center",
+    fontFamily: fonts.BebasNeue400,
   },
   item: {
     fontFamily: fonts.BebasNeue400,
