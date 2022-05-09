@@ -39,14 +39,19 @@ export const styles = StyleSheet.create({
     right: 10,
     top: 5,
   },
+  searchIcon: {
+    position: "absolute",
+    right: 10,
+    top: 5,
+  },
   searchView: {
-    width: '20%',
+    width: "18%",
     flexDirection: "row",
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 8,
-    padding: 8
+    padding: 8,
   },
   subtitle: {
     fontFamily: fonts.BebasNeue400,
@@ -77,7 +82,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "#FFFFFF",
     fontSize: 20,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   item: {
     fontFamily: fonts.BebasNeue400,

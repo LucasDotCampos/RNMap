@@ -9,7 +9,7 @@ import {
   Modal,
   SafeAreaView,
   TextInput,
-  FlatList
+  FlatList,
 } from "react-native";
 
 import { styles } from "./styles";
@@ -31,9 +31,7 @@ export const SelectMultiple = ({ options }) => {
   useEffect(() => {
     let arr = [...originalOptions];
     setData(
-      arr.filter((i) =>
-        i.name.toLowerCase().includes(search.toLowerCase())
-      )
+      arr.filter((i) => i.name.toLowerCase().includes(search.toLowerCase()))
     );
   }, [search]);
 
@@ -67,7 +65,7 @@ export const SelectMultiple = ({ options }) => {
   };
 
   const handleGetSector = async () => {
-    const sectors = JSON.parse(await AsyncStorage.getItem('@mapapp:sectors'));
+    const sectors = JSON.parse(await AsyncStorage.getItem("@mapapp:sectors"));
 
     if (!sectors) return;
 
@@ -81,7 +79,7 @@ export const SelectMultiple = ({ options }) => {
   }, []);
 
   const handleConcluir = async () => {
-    await AsyncStorage.setItem('@mapapp:sectors', JSON.stringify(selected));
+    await AsyncStorage.setItem("@mapapp:sectors", JSON.stringify(selected));
     setVisible(false);
     setSearch("");
     setRealSelected(selected);
@@ -107,7 +105,8 @@ export const SelectMultiple = ({ options }) => {
           setSelected(realSelected);
           setVisible(false);
         }}
-        visible={visible}>
+        visible={visible}
+      >
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.header}>
             <View style={styles.header2}>
@@ -126,9 +125,10 @@ export const SelectMultiple = ({ options }) => {
                 onPress={() => searchInput.current.focus()}
               >
                 <Ionicons
+                  style={styles.searchIcon}
                   name="search"
                   size={20}
-                  color={'#4184fe'}
+                  color={"#4184fe"}
                 />
                 <TextInput
                   placeholderTextColor={"#4184fe"}
@@ -145,9 +145,7 @@ export const SelectMultiple = ({ options }) => {
                   style={styles.sendButton}
                   onPress={handleConcluir}
                 >
-                  <Text style={styles.sendButtonText}>
-                    Concluir
-                  </Text>
+                  <Text style={styles.sendButtonText}>Concluir</Text>
                 </TouchableOpacity>
               </View>
             </View>
