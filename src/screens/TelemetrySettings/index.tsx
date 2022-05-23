@@ -37,14 +37,13 @@ export default function TelemetrySettings() {
         production,
       })
     );
-    const showData = await AsyncStorage.getItem("@mapapp:formData");
-    console.log(showData);
+    await AsyncStorage.getItem("@mapapp:formData");
   };
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <HeaderComponent />
+        <HeaderComponent pageName={"CONFIGURAÇÃO-TELEMETRIA"} />
 
         <View style={styles.sector}>
           <Text style={styles.text}>Selecione o Setor:</Text>

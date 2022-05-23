@@ -17,21 +17,28 @@ interface IConfig {
   port: string;
 }
 
-export const HeaderComponent = () => {
+interface IPageName {
+  pageName: string;
+}
+
+export const HeaderComponent = ({ pageName }: IPageName) => {
   const [openSettings, setOpenSettings] = useState(false);
   const [server, setServer] = useState("");
   const [port, setPort] = useState("");
   let config: IConfig;
 
-  const handleFinalizar = async () =>  {
-    await AsyncStorage.setItem("@mapapp:config", JSON.stringify({ server, port }));
+  const handleFinalizar = async () => {
+    await AsyncStorage.setItem(
+      "@mapapp:config",
+      JSON.stringify({ server, port })
+    );
     setOpenSettings(false);
-  }
+  };
 
   const handleGetConfig = async () => {
-    config = JSON.parse(await AsyncStorage.getItem('@mapapp:config'));
+    config = JSON.parse(await AsyncStorage.getItem("@mapapp:config"));
 
-    if(!config) return;
+    if (!config) return;
 
     setServer(config.server);
     setPort(config.port);
@@ -47,7 +54,7 @@ export const HeaderComponent = () => {
         <Text style={styles.text}>PAM PLÁSTICOS</Text>
       </View>
       <View style={styles.textbox2}>
-        <Text style={styles.text}>CONFIGURAÇÃO-TELEMETRIA</Text>
+        <Text style={styles.text}>{pageName}</Text>
       </View>
       <View style={styles.iconbox}>
         <TouchableOpacity onPress={() => setOpenSettings(true)}>
