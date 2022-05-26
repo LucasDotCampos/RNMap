@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     paddingTop: 30,
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
   },
   head: {
     height: 40,
@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: fonts.BebasNeue400,
     fontSize: 19,
+    color: "#fff",
   },
   data: {
     height: 50,

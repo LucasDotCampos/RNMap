@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   TouchableOpacity,
   Text,
@@ -13,36 +12,35 @@ import {
 } from "react-native";
 
 import { styles } from "./styles";
-
-interface ISector {
-  id: number;
-  name: string;
-}
+import { useSectorsContext } from "../../context/SectorsProvider";
+import { ISector } from "../../interfaces";
 
 export const SelectMultiple = ({ options }) => {
+  const { setSectors } = useSectorsContext();
   const [visible, setVisible] = useState(false);
   const [originalOptions, setOriginalOptions] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<ISector[]>([]);
   const [realSelected, setRealSelected] = useState([]);
   const searchInput = useRef(null);
 
   useEffect(() => {
     let arr = [...originalOptions];
     setData(
-      arr.filter((i) => i.name.toLowerCase().includes(search.toLowerCase()))
+      arr.filter((i) => i.dsSetor.toLowerCase().includes(search.toLowerCase()))
     );
   }, [search]);
 
   const toggleSelection = (item) => {
-    let index = selected.findIndex((i) => i?.id === item?.id);
+    let index = selected.findIndex((i) => i.cdSetor === item.cdSetor);
     let arrSelected = [...selected];
-
-    if (index !== -1) arrSelected.splice(index, 1);
-    else arrSelected.push(item);
+    if (index !== -1) {
+      arrSelected.splice(index, 1);
+    } else arrSelected.push(item);
 
     setSelected(arrSelected);
+    setSectors(arrSelected);
   };
 
   const renderItem = (item) => {
@@ -52,34 +50,19 @@ export const SelectMultiple = ({ options }) => {
           styles.text,
           {
             backgroundColor:
-              selected?.findIndex((i) => i.id === item.id) !== -1
+              selected?.findIndex((i) => i.cdSetor === item.cdSetor) !== -1
                 ? "#4184fe"
                 : "#fff",
           },
         ]}
         onPress={() => toggleSelection(item)}
       >
-        <Text style={styles.text}>{item?.name}</Text>
+        <Text style={styles.text}>{item?.dsSetor}</Text>
       </TouchableOpacity>
     );
   };
 
-  const handleGetSector = async () => {
-    const sectors = JSON.parse(await AsyncStorage.getItem("@mapapp:sectors"));
-
-    if (!sectors) return;
-
-    setData(sectors);
-    setRealSelected(sectors);
-    setSelected(sectors);
-  };
-
-  useEffect(() => {
-    handleGetSector();
-  }, []);
-
-  const handleConcluir = async () => {
-    await AsyncStorage.setItem("@mapapp:sectors", JSON.stringify(selected));
+  const handleSubmit = () => {
     setVisible(false);
     setSearch("");
     setRealSelected(selected);
@@ -96,7 +79,7 @@ export const SelectMultiple = ({ options }) => {
     >
       <View style={styles.largeInput}>
         <Text numberOfLines={1}>
-          {realSelected.map((sector) => `'${sector.name}'  `)}
+          {realSelected.map((sector) => `'${sector.dsSetor}'  `)}
         </Text>
         <Ionicons name="chevron-down" size={20} style={styles.icon} />
       </View>
@@ -143,7 +126,7 @@ export const SelectMultiple = ({ options }) => {
               <View style={styles.sendBox}>
                 <TouchableOpacity
                   style={styles.sendButton}
-                  onPress={handleConcluir}
+                  onPress={handleSubmit}
                 >
                   <Text style={styles.sendButtonText}>Concluir</Text>
                 </TouchableOpacity>
@@ -153,7 +136,7 @@ export const SelectMultiple = ({ options }) => {
           <FlatList
             style={styles.text}
             data={data}
-            keyExtractor={(item) => String([item.id])}
+            keyExtractor={(item) => String([item.cdSetor])}
             renderItem={({ item }) => renderItem(item)}
           />
         </SafeAreaView>

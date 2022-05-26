@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Text,
@@ -8,36 +7,50 @@ import {
   ScrollView,
 } from "react-native";
 
-import { indexList } from "../../fakeapi";
+import { categorias, paradas, setores } from "../../fakeapi";
 import { HeaderComponent } from "./../../components/header";
 import { styles } from "./styles";
 import { SelectMultiple } from "./../../components/multiselect";
 import { CategoryModal } from "../../components/categoryModal";
-import { StoppingModal } from "../../components/stoppingModel";
+import { StoppingModal } from "../../components/stoppingModal";
+import api from "../../services/api";
+import { useSectorsContext } from "../../context/SectorsProvider";
+import { useStoppingContext } from "../../context/StoppingProvider";
+import { useCategoriesContext } from "../../context/CategoriesProvider";
 
 export default function TelemetrySettings() {
-  const [whiteStoppingTime, setWhiteStoppingTime] = useState("");
-  const [yellowStoppingTime, setYellowStoppingTime] = useState("");
-  const [redStoppingTime, setRedStoppingTime] = useState("");
-  const [whiteRefusedParts, setWhiteRefusedParts] = useState("");
-  const [yellowRefusedParts, setYellowRefusedParts] = useState("");
-  const [redRefusedParts, setRedRefusedParts] = useState("");
-  const [production, setProduction] = useState("");
+  const [paradaTempoLimiteBranco, setParadaTempoLimiteBranco] = useState("");
+  const [paradaTempoLimiteAmarelo, setParadaTempoLimiteAmarelo] = useState("");
+  const [paradaTempoLimiteVermelho, setParadaTempoLimiteVermelho] =
+    useState("");
+  const [refugoVlrLimiteBranco, setRefugoVlrLimiteBranco] = useState("");
+  const [refugoVlrLimiteAmarelo, setRefugoVlrLimiteAmarelo] = useState("");
+  const [refugoVlrLimiteVermelho, setRefugoVlrLimiteVermelho] = useState("");
+  const [refugoProdReferencia, setRefugoProdReferencia] = useState("");
+  const { sectors } = useSectorsContext();
+  const { stopping } = useStoppingContext();
+  const { categories } = useCategoriesContext();
 
-  const handleData = async () => {
-    await AsyncStorage.setItem(
-      "@mapapp:formData",
-      JSON.stringify({
-        whiteStoppingTime,
-        yellowStoppingTime,
-        redStoppingTime,
-        whiteRefusedParts,
-        yellowRefusedParts,
-        redRefusedParts,
-        production,
-      })
-    );
-    await AsyncStorage.getItem("@mapapp:formData");
+  const handleData = () => {
+    const payload = {
+      setoresSelecionados: sectors.map((sector) => ({
+        cdSetor: sector.cdSetor,
+      })),
+      paradasPorCategoria: categories.map((category) => {
+        return {
+          idCatPar: category.idCatPar,
+          paradas: stopping.map((stop) => stop.cdParada),
+        };
+      }),
+      paradaTempoLimiteBranco,
+      paradaTempoLimiteAmarelo,
+      paradaTempoLimiteVermelho,
+      refugoVlrLimiteBranco,
+      refugoVlrLimiteAmarelo,
+      refugoVlrLimiteVermelho,
+      refugoProdReferencia,
+    };
+    console.log(payload);
   };
 
   return (
@@ -48,7 +61,7 @@ export default function TelemetrySettings() {
         <View style={styles.sector}>
           <Text style={styles.text}>Selecione o Setor:</Text>
 
-          <SelectMultiple options={indexList} />
+          <SelectMultiple options={setores.setores} />
         </View>
 
         <ScrollView horizontal={true}>
@@ -61,7 +74,7 @@ export default function TelemetrySettings() {
                     <Text style={styles.inputText}>Branco:</Text>
                     <TextInput
                       style={styles.inputBlock}
-                      onChangeText={(text) => setWhiteStoppingTime(text)}
+                      onChangeText={(text) => setParadaTempoLimiteBranco(text)}
                     />
                     <Text style={styles.segText}>SEG</Text>
                   </View>
@@ -69,7 +82,7 @@ export default function TelemetrySettings() {
                     <Text style={styles.inputText}>AMARELO:</Text>
                     <TextInput
                       style={styles.inputBlock}
-                      onChangeText={(text) => setYellowStoppingTime(text)}
+                      onChangeText={(text) => setParadaTempoLimiteAmarelo(text)}
                     />
                     <Text style={styles.segText}>SEG</Text>
                   </View>
@@ -77,7 +90,9 @@ export default function TelemetrySettings() {
                     <Text style={styles.inputText}>VERMELHO:</Text>
                     <TextInput
                       style={styles.inputBlock}
-                      onChangeText={(text) => setRedStoppingTime(text)}
+                      onChangeText={(text) =>
+                        setParadaTempoLimiteVermelho(text)
+                      }
                     />
                     <Text style={styles.segText}>SEG</Text>
                   </View>
@@ -90,11 +105,7 @@ export default function TelemetrySettings() {
                 <View style={styles.flexEndBlock}>
                   <View style={styles.inputLine}>
                     <Text style={styles.inputText}>CATEGORIA:</Text>
-                    <CategoryModal options={indexList} />
-                  </View>
-                  <View style={styles.inputLine}>
-                    <Text style={styles.inputText}>PARADA:</Text>
-                    <StoppingModal options={indexList} />
+                    <CategoryModal options={categorias.categorias} />
                   </View>
                 </View>
               </View>
@@ -109,21 +120,21 @@ export default function TelemetrySettings() {
                     <Text style={styles.inputText}>BRANCO:</Text>
                     <TextInput
                       style={styles.inputBlock}
-                      onChangeText={(text) => setWhiteRefusedParts(text)}
+                      onChangeText={(text) => setRefugoVlrLimiteBranco(text)}
                     />
                   </View>
                   <View style={styles.inputLine}>
                     <Text style={styles.inputText}>AMARELO:</Text>
                     <TextInput
                       style={styles.inputBlock}
-                      onChangeText={(text) => setYellowRefusedParts(text)}
+                      onChangeText={(text) => setRefugoVlrLimiteAmarelo(text)}
                     />
                   </View>
                   <View style={styles.inputLine}>
                     <Text style={styles.inputText}>VERMELHO:</Text>
                     <TextInput
                       style={styles.inputBlock}
-                      onChangeText={(text) => setRedRefusedParts(text)}
+                      onChangeText={(text) => setRefugoVlrLimiteVermelho(text)}
                     />
                   </View>
                 </View>
@@ -132,7 +143,7 @@ export default function TelemetrySettings() {
                   <Text style={styles.inputText}>PRODUÇÃO:</Text>
                   <TextInput
                     style={styles.production}
-                    onChangeText={(text) => setProduction(text)}
+                    onChangeText={(text) => setRefugoProdReferencia(text)}
                   />
                 </View>
               </View>

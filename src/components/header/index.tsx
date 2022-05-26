@@ -27,7 +27,7 @@ export const HeaderComponent = ({ pageName }: IPageName) => {
   const [port, setPort] = useState("");
   let config: IConfig;
 
-  const handleFinalizar = async () => {
+  const handleSubmit = async () => {
     await AsyncStorage.setItem(
       "@mapapp:config",
       JSON.stringify({ server, port })
@@ -87,7 +87,7 @@ export const HeaderComponent = ({ pageName }: IPageName) => {
                 value={port}
               />
             </View>
-            <Button onPress={handleFinalizar} title="Finalizar" />
+            <Button onPress={handleSubmit} title="Finalizar" />
           </View>
         </View>
       </Modal>
