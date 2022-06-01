@@ -14,7 +14,7 @@ import {
 import { styles } from "./styles";
 import { useStoppingContext } from "../../context/StoppingProvider";
 
-export const StoppingModal = ({ options, modalVisible }) => {
+export const StoppingModal = ({ options, modalVisible, setModalVisible }) => {
   const { setStopping } = useStoppingContext();
   const [visible, setVisible] = useState(false);
   const [originalOptions, setOriginalOptions] = useState([]);
@@ -77,7 +77,7 @@ export const StoppingModal = ({ options, modalVisible }) => {
     <Modal
       onRequestClose={() => {
         setSelected(realSelected);
-        setVisible(false);
+        // setVisible(false);
       }}
       visible={modalVisible}
     >
@@ -87,8 +87,9 @@ export const StoppingModal = ({ options, modalVisible }) => {
             <View style={styles.boxSize}>
               <TouchableOpacity
                 onPress={() => {
-                  setSelected(realSelected);
-                  setVisible(false);
+                  // setSelected(realSelected);
+                  // setVisible(false);
+                  setModalVisible(false);
                 }}
               >
                 <Text style={styles.actions}>{"<"}</Text>

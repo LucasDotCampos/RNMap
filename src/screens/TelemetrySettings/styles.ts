@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { fonts } from "../../globalstyles/fonts";
 import { StatusBar } from "react-native";
+import { Roboto_100Thin } from "@expo-google-fonts/roboto";
 
 export const styles = StyleSheet.create({
   container: {
@@ -73,6 +74,7 @@ export const styles = StyleSheet.create({
     padding: 30,
     flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
     marginBottom: 25,
     margin: 10,
   },
@@ -82,12 +84,28 @@ export const styles = StyleSheet.create({
   lineBlocks: {
     flexDirection: "row",
   },
-
+  mainInputContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mainInput: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    width: 200,
+    height: 32,
+    margin: 12,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+    fontFamily: fonts.BebasNeue400,
+  },
   button: {
     backgroundColor: "#4184FE",
     alignItems: "center",
-    width: "23%",
-    marginTop: 5,
+    padding: Roboto_100Thin,
+    marginTop: 25,
     marginBottom: 25,
     alignSelf: "center",
     fontSize: 21,
