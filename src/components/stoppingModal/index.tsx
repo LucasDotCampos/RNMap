@@ -13,19 +13,28 @@ import {
 
 import { styles } from "./styles";
 import { useStoppingContext } from "../../context/StoppingProvider";
+import { IParada, ISelectedStopping } from "../../interfaces";
+import { paradas } from "../../fakeapi";
 
-export const StoppingModal = ({ options, modalVisible, setModalVisible }) => {
+export const StoppingModal = ({
+  options,
+  modalVisible,
+  setModalVisible,
+  category,
+  deselectCategory,
+  selectCategory,
+  toggleStoppings,
+}) => {
   const { setStopping } = useStoppingContext();
   const [visible, setVisible] = useState(false);
-  const [originalOptions, setOriginalOptions] = useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(options);
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<ISelectedStopping[]>([]);
   const [realSelected, setRealSelected] = useState([]);
   const searchInput = useRef(null);
 
   useEffect(() => {
-    let arr = [...originalOptions];
+    let arr = [...options];
     setData(
       arr.filter((i) => i.dsParada.toLowerCase().includes(search.toLowerCase()))
     );
@@ -33,44 +42,64 @@ export const StoppingModal = ({ options, modalVisible, setModalVisible }) => {
 
   useEffect(() => {
     setVisible(true);
-    setData(options);
-    setOriginalOptions(options);
   }, []);
 
-  const toggleSelection = (item) => {
-    let index = selected.findIndex((i) => i?.cdParada === item?.cdParada);
+  const toggleSelection = (item: IParada) => {
+    let index = selected.findIndex((i) => i.idCatPar === category.idCatPar);
     let arrSelected = [...selected];
 
-    if (index !== -1) arrSelected.splice(index, 1);
-    else arrSelected.push(item);
+    if (index !== -1) {
+      arrSelected[index].paradas.push(item);
+    } else {
+      console.log("não tinha");
+
+      arrSelected.push({
+        idCatPar: category.idCatPar,
+        paradas: [item],
+      });
+    }
+
+    if (arrSelected.length === 0) {
+      deselectCategory(category);
+    } else {
+      selectCategory(category);
+    }
 
     setSelected(arrSelected);
-    setStopping(arrSelected);
-  };
+    console.log(arrSelected);
 
-  const renderItem = (item) => {
-    return (
-      <TouchableOpacity
-        style={[
-          styles.text,
-          {
-            backgroundColor:
-              selected?.findIndex((i) => i.cdParada === item.cdParada) !== -1
-                ? "#4184fe"
-                : "#fff",
-          },
-        ]}
-        onPress={() => toggleSelection(item)}
-      >
-        <Text style={styles.text}>{item?.dsParada}</Text>
-      </TouchableOpacity>
-    );
+    // // setStopping(arrSelected);
+    toggleStoppings(item);
+    setData([selected, ...options]);
+    console.log(data);
   };
 
   const handleSubmit = () => {
     setVisible(false);
     setSearch("");
     setRealSelected(selected);
+  };
+
+  const renderItem = (item: IParada, index) => {
+    return (
+      <TouchableOpacity
+        style={[
+          styles.text,
+          {
+            backgroundColor:
+              selected?.findIndex(
+                (i) => i.paradas[index]?.cdParada === item?.cdParada
+              ) !== -1
+                ? "#4184fe"
+                : "#fff",
+          },
+        ]}
+        onPress={() => toggleSelection(item)}
+      >
+        {category.idCatPar === item}
+        <Text style={styles.text}>{item.dsParada}</Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -129,7 +158,7 @@ export const StoppingModal = ({ options, modalVisible, setModalVisible }) => {
           style={styles.text}
           data={data}
           keyExtractor={(item) => String([item.cdParada])}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item, index }) => renderItem(item, index)}
         />
       </SafeAreaView>
     </Modal>

@@ -13,40 +13,71 @@ import {
 
 import { styles } from "./styles";
 import { useCategoriesContext } from "../../context/CategoriesProvider";
-import { ICategory } from "../../interfaces";
+import { ICategory, IParada } from "../../interfaces";
 import { StoppingModal } from "../../components/stoppingModal";
 import { categorias, paradas } from "../../fakeapi";
 import { fonts } from "../../globalstyles/fonts";
 
 export const CategoryModal = ({ navigation }) => {
-  const options = categorias.categorias;
   const { setCategories } = useCategoriesContext();
   const [visible, setVisible] = useState(false);
-  const [originalOptions, setOriginalOptions] = useState(options);
-  const [data, setData] = useState(options);
+  const [originalOptions, setOriginalOptions] = useState(categorias.categorias);
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
-  const [realSelected, setRealSelected] = useState([]);
+  const [categoryRealSelected, setCategoryRealSelected] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [categoryClicked, setCategoryClicked] = useState("");
+  const [possibleStoppings, setPossibleStoppings] = useState<IParada[]>(
+    paradas.paradas
+  );
   const searchInput = useRef(null);
+
+  const toggleStoppings = (item) => {
+    let arrSelected = [...possibleStoppings];
+
+    let index = possibleStoppings.findIndex(
+      (itemM) => item.cdParada === itemM.cdParada
+    );
+
+    if (index !== -1) {
+      arrSelected.splice(index, 1);
+    } else {
+      arrSelected.push(item);
+    }
+
+    setPossibleStoppings(arrSelected);
+  };
 
   const goBack = () => {
     navigation.navigate("Telemetry");
   };
 
-  const toggleSelection = (item) => {
-    let index = selected.findIndex((i) => i?.idCatPar === item?.idCatPar);
+  const openStopping = (item) => {
+    setModalVisible(true);
+    setCategoryClicked(item);
+  };
+
+  const deselectCategory = (item) => {
+    let index = selected.findIndex((i) => i?.cdCategoria === item?.cdCategoria);
     let arrSelected = [...selected];
-    if (index !== -1) {
-      arrSelected.splice(index, 1);
-    } else {
+    arrSelected.splice(index, 1);
+    setSelected(arrSelected);
+    setCategories(arrSelected);
+    setCategoryRealSelected(selected);
+  };
+
+  const selectCategory = (item) => {
+    let index = selected.findIndex((i) => i?.cdCategoria === item?.cdCategoria);
+    let arrSelected = [...selected];
+
+    if (index === -1) {
       arrSelected.push(item);
-      setModalVisible(true);
-      setVisible(false);
     }
 
     setSelected(arrSelected);
     setCategories(arrSelected);
+    setCategoryRealSelected(selected);
   };
 
   useEffect(() => {
@@ -68,7 +99,7 @@ export const CategoryModal = ({ navigation }) => {
                 : "#fff",
           },
         ]}
-        onPress={() => toggleSelection(item)}
+        onPress={() => openStopping(item)}
       >
         <Text
           style={{
@@ -92,9 +123,13 @@ export const CategoryModal = ({ navigation }) => {
   return (
     <>
       <StoppingModal
-        options={paradas.paradas}
+        category={categoryClicked}
+        options={possibleStoppings}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        deselectCategory={deselectCategory}
+        selectCategory={selectCategory}
+        toggleStoppings={toggleStoppings}
       />
       <View style={styles.container}>
         <View style={styles.header}>
@@ -102,7 +137,7 @@ export const CategoryModal = ({ navigation }) => {
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => {
-                setSelected(realSelected);
+                setSelected(categoryRealSelected);
                 goBack();
               }}
             >
