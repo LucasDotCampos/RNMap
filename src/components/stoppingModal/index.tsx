@@ -77,10 +77,10 @@ export const StoppingModal = ({
 
     setSelected(arrSelected);
 
-    // setStopping(arrSelected);
     toggleStoppings(item);
 
     setData(JSON.parse(await AsyncStorage.getItem("possibleStoppings")));
+    setStopping(data);
   };
 
   const deselectParadas = async (item: IParada) => {
