@@ -13,40 +13,77 @@ import {
 
 import { styles } from "./styles";
 import { useCategoriesContext } from "../../context/CategoriesProvider";
-import { ICategory } from "../../interfaces";
+import { ICategory, IParada } from "../../interfaces";
 import { StoppingModal } from "../../components/stoppingModal";
 import { categorias, paradas } from "../../fakeapi";
 import { fonts } from "../../globalstyles/fonts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const CategoryModal = ({ navigation }) => {
-  const options = categorias.categorias;
   const { setCategories } = useCategoriesContext();
   const [visible, setVisible] = useState(false);
-  const [originalOptions, setOriginalOptions] = useState(options);
-  const [data, setData] = useState(options);
+  const [originalOptions, setOriginalOptions] = useState(categorias.categorias);
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState([]);
-  const [realSelected, setRealSelected] = useState([]);
+  const [selected, setSelected] = useState<ICategory[]>([]);
+  const [categoryRealSelected, setCategoryRealSelected] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [categoryClicked, setCategoryClicked] = useState<ICategory>();
+  const [possibleStoppings, setPossibleStoppings] = useState<IParada[]>(
+    paradas.paradas
+  );
   const searchInput = useRef(null);
+
+  const toggleStoppings = async (item: IParada) => {
+    let arrSelected = [...possibleStoppings];
+
+    let index = possibleStoppings.findIndex(
+      (itemM) => item.cdParada === itemM.cdParada
+    );
+
+    if (index !== -1) {
+      arrSelected.splice(index, 1);
+    } else {
+      arrSelected.push(item);
+    }
+
+    await AsyncStorage.setItem(
+      "possibleStoppings",
+      JSON.stringify(arrSelected)
+    );
+
+    setPossibleStoppings(arrSelected);
+  };
 
   const goBack = () => {
     navigation.navigate("Telemetry");
   };
 
-  const toggleSelection = (item) => {
+  const openStopping = (item) => {
+    setModalVisible(true);
+    setCategoryClicked(item);
+  };
+
+  const deselectCategory = (item: ICategory) => {
     let index = selected.findIndex((i) => i?.idCatPar === item?.idCatPar);
     let arrSelected = [...selected];
-    if (index !== -1) {
-      arrSelected.splice(index, 1);
-    } else {
+    arrSelected.splice(index, 1);
+    setSelected(arrSelected);
+    setCategories(arrSelected);
+    setCategoryRealSelected(selected);
+  };
+
+  const selectCategory = (item: ICategory) => {
+    let index = selected.findIndex((i) => i?.idCatPar === item?.idCatPar);
+    let arrSelected = [...selected];
+
+    if (index === -1) {
       arrSelected.push(item);
-      setModalVisible(true);
-      setVisible(false);
     }
 
     setSelected(arrSelected);
     setCategories(arrSelected);
+    setCategoryRealSelected(selected);
   };
 
   useEffect(() => {
@@ -68,7 +105,7 @@ export const CategoryModal = ({ navigation }) => {
                 : "#fff",
           },
         ]}
-        onPress={() => toggleSelection(item)}
+        onPress={() => openStopping(item)}
       >
         <Text
           style={{
@@ -92,9 +129,13 @@ export const CategoryModal = ({ navigation }) => {
   return (
     <>
       <StoppingModal
-        options={paradas.paradas}
+        category={categoryClicked}
+        options={possibleStoppings}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        deselectCategory={deselectCategory}
+        selectCategory={selectCategory}
+        toggleStoppings={toggleStoppings}
       />
       <View style={styles.container}>
         <View style={styles.header}>
@@ -102,34 +143,11 @@ export const CategoryModal = ({ navigation }) => {
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => {
-                setSelected(realSelected);
+                setSelected(categoryRealSelected);
                 goBack();
               }}
             >
               <Text style={styles.backButtonText}>{"<"}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View>
-            <TouchableOpacity
-              style={styles.searchView}
-              onPress={() => searchInput.current.focus()}
-            >
-              <Ionicons
-                style={styles.searchIcon}
-                name="search"
-                size={20}
-                color={"#4184fe"}
-              />
-              <TextInput
-                placeholderTextColor={"#4184fe"}
-                placeholder={"Pesquisar"}
-                style={styles.input}
-                value={search}
-                onChangeText={setSearch}
-                ref={searchInput}
-                underlineColorAndroid={"transparent"}
-              />
             </TouchableOpacity>
           </View>
 
