@@ -17,6 +17,7 @@ import { ICategory, IParada } from "../../interfaces";
 import { StoppingModal } from "../../components/stoppingModal";
 import { categorias, paradas } from "../../fakeapi";
 import { fonts } from "../../globalstyles/fonts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const CategoryModal = ({ navigation }) => {
   const { setCategories } = useCategoriesContext();
@@ -27,13 +28,13 @@ export const CategoryModal = ({ navigation }) => {
   const [selected, setSelected] = useState([]);
   const [categoryRealSelected, setCategoryRealSelected] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [categoryClicked, setCategoryClicked] = useState("");
+  const [categoryClicked, setCategoryClicked] = useState<ICategory>();
   const [possibleStoppings, setPossibleStoppings] = useState<IParada[]>(
     paradas.paradas
   );
   const searchInput = useRef(null);
 
-  const toggleStoppings = (item) => {
+  const toggleStoppings = async (item) => {
     let arrSelected = [...possibleStoppings];
 
     let index = possibleStoppings.findIndex(
@@ -41,10 +42,16 @@ export const CategoryModal = ({ navigation }) => {
     );
 
     if (index !== -1) {
+      console.log("splice");
       arrSelected.splice(index, 1);
     } else {
       arrSelected.push(item);
     }
+
+    await AsyncStorage.setItem(
+      "possibleStoppings",
+      JSON.stringify(arrSelected)
+    );
 
     setPossibleStoppings(arrSelected);
   };

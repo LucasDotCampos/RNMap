@@ -13,8 +13,19 @@ import {
 
 import { styles } from "./styles";
 import { useStoppingContext } from "../../context/StoppingProvider";
-import { IParada, ISelectedStopping } from "../../interfaces";
+import { ICategory, IParada, ISelectedStopping } from "../../interfaces";
 import { paradas } from "../../fakeapi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+interface IProps {
+  options: IParada[];
+  modalVisible: any;
+  setModalVisible: any;
+  category: ICategory;
+  deselectCategory: any;
+  selectCategory: any;
+  toggleStoppings: any;
+}
 
 export const StoppingModal = ({
   options,
@@ -24,29 +35,33 @@ export const StoppingModal = ({
   deselectCategory,
   selectCategory,
   toggleStoppings,
-}) => {
+}: IProps) => {
   const { setStopping } = useStoppingContext();
   const [visible, setVisible] = useState(false);
-  const [data, setData] = useState(options);
+  const [data, setData] = useState<IParada[]>(options);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<ISelectedStopping[]>([]);
   const [realSelected, setRealSelected] = useState([]);
   const searchInput = useRef(null);
 
-  useEffect(() => {
-    let arr = [...options];
-    setData(
-      arr.filter((i) => i.dsParada.toLowerCase().includes(search.toLowerCase()))
-    );
-  }, [search]);
+  // useEffect(() => {
+  //   let arr = [...options];
+  //   setData(
+  //     arr.filter((i) => i.dsParada.toLowerCase().includes(search.toLowerCase()))
+  //   );
+  // }, [search]);
 
   useEffect(() => {
     setVisible(true);
   }, []);
 
-  const toggleSelection = (item: IParada) => {
-    let index = selected.findIndex((i) => i.idCatPar === category.idCatPar);
+  const selectedCategoryIndex: number = selected.findIndex(
+    (i) => i.idCatPar === category.idCatPar
+  );
+
+  const selectParadas = async (item: IParada) => {
     let arrSelected = [...selected];
+    let index = arrSelected.findIndex((i) => i.idCatPar === category.idCatPar);
 
     if (index !== -1) {
       arrSelected[index].paradas.push(item);
@@ -55,8 +70,12 @@ export const StoppingModal = ({
 
       arrSelected.push({
         idCatPar: category.idCatPar,
-        paradas: [item],
+        paradas: [],
       });
+
+      index = arrSelected.findIndex((i) => i.idCatPar === category.idCatPar);
+
+      arrSelected[index].paradas.push(item);
     }
 
     if (arrSelected.length === 0) {
@@ -66,12 +85,32 @@ export const StoppingModal = ({
     }
 
     setSelected(arrSelected);
-    console.log(arrSelected);
+    console.log("paradas Selecionadas", arrSelected);
 
     // // setStopping(arrSelected);
     toggleStoppings(item);
-    setData([selected, ...options]);
-    console.log(data);
+
+    setData(JSON.parse(await AsyncStorage.getItem("possibleStoppings")));
+
+    console.log("paradas Disponíveis", options);
+  };
+
+  const deselectParadas = async (item: IParada) => {
+    let arrSelected = [...selected];
+    let index = arrSelected.findIndex((i) => i.idCatPar === category.idCatPar);
+
+    arrSelected[index].paradas = arrSelected[index].paradas.filter(
+      (i) => i.cdParada !== item.cdParada
+    );
+
+    if (arrSelected[index].paradas.length === 0) {
+      deselectCategory(category);
+    }
+
+    setSelected(arrSelected);
+    console.log("paradas Selecionadas", arrSelected);
+    toggleStoppings(item);
+    setData(JSON.parse(await AsyncStorage.getItem("possibleStoppings")));
   };
 
   const handleSubmit = () => {
@@ -80,23 +119,20 @@ export const StoppingModal = ({
     setRealSelected(selected);
   };
 
-  const renderItem = (item: IParada, index) => {
+  const renderItemSelected = (item: IParada, index) => {
     return (
       <TouchableOpacity
-        style={[
-          styles.text,
-          {
-            backgroundColor:
-              selected?.findIndex(
-                (i) => i.paradas[index]?.cdParada === item?.cdParada
-              ) !== -1
-                ? "#4184fe"
-                : "#fff",
-          },
-        ]}
-        onPress={() => toggleSelection(item)}
+        style={styles.text}
+        onPress={() => deselectParadas(item)}
       >
-        {category.idCatPar === item}
+        <Text style={styles.text}>{item.dsParada}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderItem = (item: IParada, index) => {
+    return (
+      <TouchableOpacity style={styles.text} onPress={() => selectParadas(item)}>
         <Text style={styles.text}>{item.dsParada}</Text>
       </TouchableOpacity>
     );
@@ -154,11 +190,23 @@ export const StoppingModal = ({
             </View>
           </View>
         </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Opções</Text>
+        </View>
         <FlatList
           style={styles.text}
           data={data}
           keyExtractor={(item) => String([item.cdParada])}
           renderItem={({ item, index }) => renderItem(item, index)}
+        />
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Selecionados</Text>
+        </View>
+        <FlatList
+          style={styles.text}
+          data={selected[selectedCategoryIndex]?.paradas || []}
+          keyExtractor={(item) => String([item.cdParada])}
+          renderItem={({ item, index }) => renderItemSelected(item, index)}
         />
       </SafeAreaView>
     </Modal>
