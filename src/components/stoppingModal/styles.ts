@@ -10,6 +10,16 @@ export const styles = StyleSheet.create({
   boxSize: {
     flex: 1,
   },
+  titleContainer: { backgroundColor: "#4184fe", margin: 2 },
+  titleText: {
+    fontSize: 21,
+    fontWeight: "500",
+    color: "#fff",
+    fontFamily: fonts.BebasNeue400,
+    textAlign: "center",
+    padding: 10,
+    margin: 2,
+  },
   text: {
     fontSize: 21,
     fontWeight: "500",
@@ -19,6 +29,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     margin: 2,
   },
+
   header: {
     backgroundColor: "#4184fe",
     padding: 12,
@@ -107,5 +118,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+
+  flatListContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+
+  flatList: {
+    flex: 1,
   },
 });

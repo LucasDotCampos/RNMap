@@ -7,18 +7,17 @@ import {
   ScrollView,
 } from "react-native";
 
-import { categorias, paradas, setores } from "../../fakeapi";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+import { setores } from "../../fakeapi";
 import { HeaderComponent } from "./../../components/header";
 import { styles } from "./styles";
 import { SelectMultiple } from "./../../components/multiselect";
-import { CategoryModal } from "../../components/categoryModal";
-import { StoppingModal } from "../../components/stoppingModal";
-import api from "../../services/api";
 import { useSectorsContext } from "../../context/SectorsProvider";
 import { useStoppingContext } from "../../context/StoppingProvider";
 import { useCategoriesContext } from "../../context/CategoriesProvider";
 
-export default function TelemetrySettings() {
+export default function TelemetrySettings({ navigation }) {
   const [paradaTempoLimiteBranco, setParadaTempoLimiteBranco] = useState("");
   const [paradaTempoLimiteAmarelo, setParadaTempoLimiteAmarelo] = useState("");
   const [paradaTempoLimiteVermelho, setParadaTempoLimiteVermelho] =
@@ -50,8 +49,12 @@ export default function TelemetrySettings() {
       refugoVlrLimiteVermelho,
       refugoProdReferencia,
     };
-    console.log(payload);
+    // console.log(payload);
   };
+
+  function goToCategory() {
+    navigation.navigate("Category");
+  }
 
   return (
     <ScrollView>
@@ -102,11 +105,18 @@ export default function TelemetrySettings() {
             <View>
               <Text style={styles.text}>CONFIGURAÇÃO TIPO DE PARADA</Text>
               <View style={styles.block}>
-                <View style={styles.flexEndBlock}>
-                  <View style={styles.inputLine}>
-                    <Text style={styles.inputText}>CATEGORIA:</Text>
-                    <CategoryModal options={categorias.categorias} />
-                  </View>
+                <View style={styles.mainInputContainer}>
+                  <Text style={styles.inputText}>Category</Text>
+                  <TouchableOpacity onPress={goToCategory}>
+                    <View style={styles.mainInput}>
+                      <Text numberOfLines={1}>Categoria Selecionada</Text>
+                      <Ionicons
+                        name="chevron-down"
+                        size={20}
+                        style={styles.icon}
+                      />
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

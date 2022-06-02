@@ -27,7 +27,7 @@ export default function App() {
     <SectorsProvider>
       <CategoriesProvider>
         <StoppingProvider>
-          <TelemetrySettings />
+          <Routes />
         </StoppingProvider>
       </CategoriesProvider>
     </SectorsProvider>

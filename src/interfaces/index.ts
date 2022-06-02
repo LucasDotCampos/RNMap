@@ -28,3 +28,14 @@ export interface IStoppingValue {
   stopping: IStopping[];
   setStopping: (state: IStopping[]) => void;
 }
+
+export interface ISelectedStopping {
+  idCatPar: string;
+  paradas: IParada[];
+}
+
+export interface IParada {
+  cdParada: string;
+  dsParada: string;
+  tipoPar: number;
+}
