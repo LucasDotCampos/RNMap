@@ -25,7 +25,7 @@ export const CategoryModal = ({ navigation }) => {
   const [originalOptions, setOriginalOptions] = useState(categorias.categorias);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<ICategory[]>([]);
   const [categoryRealSelected, setCategoryRealSelected] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [categoryClicked, setCategoryClicked] = useState<ICategory>();
@@ -34,7 +34,7 @@ export const CategoryModal = ({ navigation }) => {
   );
   const searchInput = useRef(null);
 
-  const toggleStoppings = async (item) => {
+  const toggleStoppings = async (item: IParada) => {
     let arrSelected = [...possibleStoppings];
 
     let index = possibleStoppings.findIndex(
@@ -42,7 +42,6 @@ export const CategoryModal = ({ navigation }) => {
     );
 
     if (index !== -1) {
-      console.log("splice");
       arrSelected.splice(index, 1);
     } else {
       arrSelected.push(item);
@@ -65,8 +64,8 @@ export const CategoryModal = ({ navigation }) => {
     setCategoryClicked(item);
   };
 
-  const deselectCategory = (item) => {
-    let index = selected.findIndex((i) => i?.cdCategoria === item?.cdCategoria);
+  const deselectCategory = (item: ICategory) => {
+    let index = selected.findIndex((i) => i?.idCatPar === item?.idCatPar);
     let arrSelected = [...selected];
     arrSelected.splice(index, 1);
     setSelected(arrSelected);
@@ -74,8 +73,8 @@ export const CategoryModal = ({ navigation }) => {
     setCategoryRealSelected(selected);
   };
 
-  const selectCategory = (item) => {
-    let index = selected.findIndex((i) => i?.cdCategoria === item?.cdCategoria);
+  const selectCategory = (item: ICategory) => {
+    let index = selected.findIndex((i) => i?.idCatPar === item?.idCatPar);
     let arrSelected = [...selected];
 
     if (index === -1) {
@@ -149,29 +148,6 @@ export const CategoryModal = ({ navigation }) => {
               }}
             >
               <Text style={styles.backButtonText}>{"<"}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View>
-            <TouchableOpacity
-              style={styles.searchView}
-              onPress={() => searchInput.current.focus()}
-            >
-              <Ionicons
-                style={styles.searchIcon}
-                name="search"
-                size={20}
-                color={"#4184fe"}
-              />
-              <TextInput
-                placeholderTextColor={"#4184fe"}
-                placeholder={"Pesquisar"}
-                style={styles.input}
-                value={search}
-                onChangeText={setSearch}
-                ref={searchInput}
-                underlineColorAndroid={"transparent"}
-              />
             </TouchableOpacity>
           </View>
 

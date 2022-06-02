@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     margin: 2,
   },
+
   header: {
     backgroundColor: "#4184fe",
     padding: 12,
@@ -117,5 +118,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+
+  flatListContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+
+  flatList: {
+    flex: 1,
   },
 });

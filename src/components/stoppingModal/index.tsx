@@ -44,13 +44,6 @@ export const StoppingModal = ({
   const [realSelected, setRealSelected] = useState([]);
   const searchInput = useRef(null);
 
-  // useEffect(() => {
-  //   let arr = [...options];
-  //   setData(
-  //     arr.filter((i) => i.dsParada.toLowerCase().includes(search.toLowerCase()))
-  //   );
-  // }, [search]);
-
   useEffect(() => {
     setVisible(true);
   }, []);
@@ -66,8 +59,6 @@ export const StoppingModal = ({
     if (index !== -1) {
       arrSelected[index].paradas.push(item);
     } else {
-      console.log("não tinha");
-
       arrSelected.push({
         idCatPar: category.idCatPar,
         paradas: [],
@@ -85,14 +76,11 @@ export const StoppingModal = ({
     }
 
     setSelected(arrSelected);
-    console.log("paradas Selecionadas", arrSelected);
 
-    // // setStopping(arrSelected);
+    // setStopping(arrSelected);
     toggleStoppings(item);
 
     setData(JSON.parse(await AsyncStorage.getItem("possibleStoppings")));
-
-    console.log("paradas Disponíveis", options);
   };
 
   const deselectParadas = async (item: IParada) => {
@@ -108,7 +96,6 @@ export const StoppingModal = ({
     }
 
     setSelected(arrSelected);
-    console.log("paradas Selecionadas", arrSelected);
     toggleStoppings(item);
     setData(JSON.parse(await AsyncStorage.getItem("possibleStoppings")));
   };
@@ -160,54 +147,32 @@ export const StoppingModal = ({
                 <Text style={styles.actions}>{"<"}</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={styles.searchView}
-              onPress={() => searchInput.current.focus()}
-            >
-              <Ionicons
-                style={styles.searchIcon}
-                name="search"
-                size={20}
-                color={"#4184fe"}
-              />
-              <TextInput
-                placeholderTextColor={"#4184fe"}
-                placeholder={"Pesquisar"}
-                style={styles.input}
-                value={search}
-                onChangeText={setSearch}
-                ref={searchInput}
-              />
-            </TouchableOpacity>
-
-            <View style={styles.sendBox}>
-              <TouchableOpacity
-                style={styles.sendButton}
-                onPress={handleSubmit}
-              >
-                <Text style={styles.sendButtonText}>Concluir</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Opções</Text>
+        <View style={styles.flatListContainer}>
+          <View style={styles.flatList}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText}>Opções</Text>
+            </View>
+            <FlatList
+              style={styles.text}
+              data={data}
+              keyExtractor={(item) => String([item.cdParada])}
+              renderItem={({ item, index }) => renderItem(item, index)}
+            />
+          </View>
+          <View style={styles.flatList}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText}>Selecionados</Text>
+            </View>
+            <FlatList
+              style={styles.text}
+              data={selected[selectedCategoryIndex]?.paradas || []}
+              keyExtractor={(item) => String([item.cdParada])}
+              renderItem={({ item, index }) => renderItemSelected(item, index)}
+            />
+          </View>
         </View>
-        <FlatList
-          style={styles.text}
-          data={data}
-          keyExtractor={(item) => String([item.cdParada])}
-          renderItem={({ item, index }) => renderItem(item, index)}
-        />
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Selecionados</Text>
-        </View>
-        <FlatList
-          style={styles.text}
-          data={selected[selectedCategoryIndex]?.paradas || []}
-          keyExtractor={(item) => String([item.cdParada])}
-          renderItem={({ item, index }) => renderItemSelected(item, index)}
-        />
       </SafeAreaView>
     </Modal>
   );
